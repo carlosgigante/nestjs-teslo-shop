@@ -4,23 +4,24 @@
 
 # Teslo API
 
-1. Clonar proyecto
+1. Clonar proyecto.
 
-2. Instalar las dependencias
+2. ```yarn install```
+
+3. Clonar el archivo ```.env.template``` y renombrarlo a ```.env```
+
+4. Cambiar las variables de entorno de ser necesario.
+
+5. Levantar la base de datos.
 ```
-yarn install
-```
-
-3. Clonar el archivo __.env.template__ y renombrarlo a __.env__
-
-4. Cambiar las variables de entorno si se requiere
-
-5. Levantar la base de datos
-```
-docker-compose -up -d
+docker-compose up -d
 ```
 
-6. Levantar el modo desarrollo
+6. Ejecutar SEED
+```
+localhost:3000/api/seed
+```
+7. Levantar
 ```
 yarn start:dev
 ```

@@ -1,45 +1,80 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { text } from "stream/consumers";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProductImage } from "./";
 
+// @Entity({name: 'products'}) asi se cambia el nombre a las tablas
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column('text', {
-        unique: true
+        unique: true,
     })
     title: string;
 
-    @Column('numeric', {
-        default: 0
+    @Column('float', {
+        default: 0,
     })
     price: number;
 
     @Column({
         type: 'text',
-        nullable: true
+        nullable: true,
     })
     description: string;
 
     @Column('text', {
-        unique: true
+        unique: true,
     })
     slug: string;
 
-    @Column('int', {
+    @Column('int',{
         default: 0
     })
-    strock: number;
+    stock: number;
 
-    @Column('text', {
-        array: true
+    @Column('text',{
+        array: true,
     })
-    sizes: string[]
+    sizes: string[];
 
     @Column('text')
     gender: string;
 
+    @Column('text', {
+        array: true,
+        default: []
+    })
+    tags: string[];
 
-    // tags
-    // images
+    // Relacion con la tabla productimage
+    @OneToMany(
+        () => ProductImage,
+        (productImage) => productImage.product,
+        {cascade: true, eager: true}
+    )
+    images?: ProductImage[];
+
+    @BeforeInsert()
+    checkSlogInsert(){
+        if(!this.slug){
+            this.slug = this.title;
+        }
+        this.slug = this.slug
+            .toLowerCase()
+            .replaceAll(' ','_')
+            .replaceAll("'",'')
+            .replaceAll("-",'')
+    }
+    @BeforeUpdate()
+    checkSlogUpdate(){
+        
+    this.slug = this.slug
+        .toLowerCase()
+        .replaceAll(' ','_')
+        .replaceAll("'",'')
+        .replaceAll("-",'')
+    }
+
 }
