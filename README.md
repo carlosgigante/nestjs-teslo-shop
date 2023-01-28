@@ -17,11 +17,12 @@
 docker-compose up -d
 ```
 
-6. Ejecutar SEED
-```
-localhost:3000/api/seed
-```
-7. Levantar
+6. Levantar
 ```
 yarn start:dev
+```
+
+7. Ejecutar SEED
+```
+localhost:3000/api/seed
 ```
