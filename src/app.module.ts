@@ -15,6 +15,14 @@ import { MessagesWsModule } from './messages-ws/messages-ws.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
+      // configuracion para desblegar en la nube
+      ssl: process.env.STAGE === 'prod' ? true: false,
+      extra: {
+        ssl: process.env.STAGE === 'prod'
+        ? {rejectUnauthorized: false}
+        : null,
+      },
+      // -----------------
       type: 'postgres',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
